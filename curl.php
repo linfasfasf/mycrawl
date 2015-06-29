@@ -69,6 +69,22 @@ class crawl{
         $htmlfile2=fopen('question.html', 'w+');
             fwrite($htmlfile2, $questioninfo);
             fclose($htmlfile2);
+            if(preg_match_all('/<div tabindex="-1" class="zm-item-answer "[\s\S]*<\/div>[\s]/', $questioninfo,$div)){
+                preg_match_all('/<span class="count">\d{1,9}<\/span>/', $div[0][0],$getcount);
+                var_dump( $getcount);
+                foreach ($getcount[0] as $countstr){
+                    $count=trim($countstr, '<span class="count"/>');
+//                    var_dump($count);
+                    if($count>=100){
+                        var_dump($count);
+                    }
+                }
+                $htmlfile2=fopen('div.txt', 'w+');
+            fwrite($htmlfile2, $div[0][0]);
+            fclose($htmlfile2);
+            }  else {
+                die('preg div fail');
+            }
     }
 }
 
@@ -76,6 +92,6 @@ class crawl{
 
 $crawl= new crawl();
 
-//$crawl ->setcookie();
+//$crawl ->setcookie();s
 
 $crawl->getpageinfo();
