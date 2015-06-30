@@ -76,7 +76,12 @@ class crawl{
                     $count=trim($countstr, '<span class="count"/>');
 //                    var_dump($count);
                     if($count>=100){
-                        var_dump($count);
+                        preg_match_all('/<div class=" zm-editable-content clearfix">[\S\s]*<\/div>/', $div[0][0],$content);//匹配文本内容
+                        $content=trim($content[0][0],'<div class=" zm-editable-content clearfix">/');
+                        var_dump($content);
+                         $htmlfile2=fopen('content.html', 'w+');
+                            fwrite($htmlfile2, $content);
+                            fclose($htmlfile2);
                     }
                 }
                 $htmlfile2=fopen('div.txt', 'w+');
@@ -92,6 +97,6 @@ class crawl{
 
 $crawl= new crawl();
 
-//$crawl ->setcookie();s
+//$crawl ->setcookie();
 
 $crawl->getpageinfo();
